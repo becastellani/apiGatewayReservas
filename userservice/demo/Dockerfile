@@ -1,5 +1,15 @@
-FROM openjdk:17-jdk
+FROM maven:3.8.4-openjdk-17 AS build
 WORKDIR /app
-COPY target/userservice.jar userservice.jar
+
+# Copia o projeto inteiro
+COPY . .
+
+# Build sem testes
+RUN mvn clean package -DskipTests
+
+# Imagem final
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar /app/service.jar
 EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "userservice.jar"]
+ENTRYPOINT ["java", "-jar", "service.jar"]

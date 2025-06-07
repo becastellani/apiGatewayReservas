@@ -6,12 +6,17 @@ services:
       - "8081:8081"
     depends_on:
       - userdb
+      - rabbitmq
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://userdb:5432/usersdb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: admin
+      SPRING_RABBITMQ_PASSWORD: admin
     networks:
-      - reservas-network
+      - users-network
 
   salaservice:
     build: ./salaservice/demo
@@ -19,12 +24,17 @@ services:
       - "8082:8082"
     depends_on:
       - saladb
+      - rabbitmq
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://saladb:5432/salasdb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: admin
+      SPRING_RABBITMQ_PASSWORD: admin
     networks:
-      - reservas-network
+      - salas-network
 
   reservaservice:
     build: ./reservaservice/demo
@@ -32,10 +42,15 @@ services:
       - "8083:8083"
     depends_on:
       - reservadb
+      - rabbitmq
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://reservadb:5432/reservasdb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: admin
+      SPRING_RABBITMQ_PASSWORD: admin
     networks:
       - reservas-network
 
@@ -50,7 +65,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
     networks:
-      - reservas-network
+      - users-network
     volumes:
       - userdb-data:/var/lib/postgresql/data
 
@@ -65,7 +80,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
     networks:
-      - reservas-network
+      - salas-network
     volumes:
       - saladb-data:/var/lib/postgresql/data
 
@@ -84,18 +99,54 @@ services:
     volumes:
       - reservadb-data:/var/lib/postgresql/data
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - users-network
+      - salas-network
+      - reservas-network
+
+  gateway:
+    build: ./gateway/demo
+    ports:
+      - "8080:8080"
+    depends_on:
+      - userservice
+      - salaservice
+      - reservaservice
+    restart: unless-stopped
+    networks:
+      - users-network
+      - salas-network
+      - reservas-network
+
   adminer:
     image: adminer
     restart: always
     ports:
-      - "8080:8080"
+      - "8090:8080"
     networks:
       - reservas-network
+      - users-network
+      - salas-network
 
 networks:
   reservas-network:
+  salas-network:
+  users-network:
 
 volumes:
   userdb-data:
   saladb-data:
   reservadb-data:
+  rabbitmq-data:

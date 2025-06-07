@@ -1,7 +1,7 @@
 package com.reservaservice.demo.application.service;
 
 import com.reservaservice.demo.domain.model.Reserva;
-import com.reservaservice.demo.infrastructure.repository.ReservaRepository;
+import com.reservaservice.demo.domain.repository.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

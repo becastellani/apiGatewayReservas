@@ -8,10 +8,17 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
         <module name="demo (1) (com.usuarioservice)" />
         <module name="demo" />
         <module name="demo (1) (com.salaservice)" />
+      </profile>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="demo (1) (org.example)" />
       </profile>
     </annotationProcessing>
   </component>
@@ -20,6 +27,7 @@
       <module name="demo" options="-parameters" />
       <module name="demo (1) (com.salaservice)" options="-parameters" />
       <module name="demo (1) (com.usuarioservice)" options="-parameters" />
+      <module name="demo (1) (org.example)" options="-parameters" />
     </option>
   </component>
 </project>

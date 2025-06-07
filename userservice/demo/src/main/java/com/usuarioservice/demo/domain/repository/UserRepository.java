@@ -1,4 +1,4 @@
-package com.usuarioservice.demo.infrastructure.repository;
+package com.usuarioservice.demo.domain.repository;
 
 import com.usuarioservice.demo.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

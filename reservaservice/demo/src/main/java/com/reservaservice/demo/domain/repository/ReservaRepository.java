@@ -1,4 +1,4 @@
-package com.reservaservice.demo.infrastructure.repository;
+package com.reservaservice.demo.domain.repository;
 
 import com.reservaservice.demo.domain.model.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;

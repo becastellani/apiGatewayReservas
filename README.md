@@ -14,35 +14,12 @@ O sistema é composto por três microserviços independentes que se comunicam at
 - **Comunicação Assíncrona**: Sincronização automática de dados entre microserviços
 - **API Gateway**: Ponto único de entrada para todas as requisições
 
-## 🏗️ Arquitetura
-
-```
-┌─────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Cliente   │───▶│   API Gateway   │───▶│  Microserviços  │
-└─────────────┘    │   (Port 8080)   │    │                 │
-                   └─────────────────┘    │ UserService     │
-                                          │ SalaService     │
-                                          │ ReservaService  │
-                                          └─────────────────┘
-                                                   │
-                   ┌─────────────────┐            │
-                   │    RabbitMQ     │◀───────────┘
-                   │  (Mensageria)   │
-                   └─────────────────┘
-                           
-                   ┌─────────────────┐
-                   │   PostgreSQL    │
-                   │ (3 Databases)   │
-                   └─────────────────┘
-```
-
 ### Padrões Implementados
 
 - **Database per Service**: Cada microserviço possui seu próprio banco de dados
 - **API Gateway Pattern**: Ponto único de entrada para clientes externos
 - **Event-Driven Architecture**: Comunicação assíncrona via eventos
 - **Saga Pattern**: Coordenação de transações distribuídas
-- **Cache Pattern**: Replicação de dados para melhor performance
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -66,7 +43,6 @@ O sistema é composto por três microserviços independentes que se comunicam at
 
 ### Arquitetura
 - **Domain-Driven Design (DDD)**
-- **Arquitetura Hexagonal**
 - **Microserviços**
 
 ## 🚀 Microserviços

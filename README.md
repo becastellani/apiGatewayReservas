@@ -203,9 +203,6 @@ curl -X POST http://localhost:8080/users \
 | **API Gateway** | http://localhost:8080/actuator/health | - |
 | **RabbitMQ Management** | http://localhost:15672 | admin/admin |
 | **Adminer (DB)** | http://localhost:8090 | postgres/admin |
-| **UserService Health** | http://localhost:8081/actuator/health | - |
-| **SalaService Health** | http://localhost:8082/actuator/health | - |
-| **ReservaService Health** | http://localhost:8083/actuator/health | - |
 
 ### Logs
 ```bash
